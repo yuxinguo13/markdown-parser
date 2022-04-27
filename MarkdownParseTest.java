@@ -1,10 +1,10 @@
 import static org.junit.Assert.*;
 import org.junit.*;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class MarkdownParseTest {
@@ -12,12 +12,13 @@ public class MarkdownParseTest {
     @Test
     public void testMarkdownTest() throws IOException {
 
-        Path fileName = Path.of("test-file5.md");
-        String content = Files.readString(fileName);
-        ArrayList<String> links = MarkdownParse.getLinks(content);
+        String fileName = "test-file.md";
+        File file = new File(fileName);
+        Scanner myReader = new Scanner(file);
+        ArrayList<String> links = MarkdownParse.getLinks(myReader);
         ArrayList<String> result = new ArrayList<>();
-        result.add("stuff");
-        result.add("page.com");
+        result.add("https://something.com");
+        result.add("some-thing.html");
         assertEquals(result, links);
     }
 
