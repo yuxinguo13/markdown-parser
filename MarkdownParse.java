@@ -19,6 +19,7 @@ public class MarkdownParse {
             while(currentIndex < line.length()) {
                 int openBracket = line.indexOf("[", currentIndex);
                 int closeBracket = line.indexOf("]", openBracket);
+                
                 int openParen = line.indexOf("(", closeBracket);
                 int closeParen = line.indexOf(")", openParen);
                 result.add(line.substring(openParen + 1, closeParen));
