@@ -14,17 +14,23 @@ public class MarkdownParse {
         String line = myReader.nextLine();
         ArrayList<String> result = new ArrayList<>();
         
-        while ((line != "") && next) {
+        while (next) {
             int currentIndex = 0;
             while(currentIndex < line.length()) {
                 int openBracket = line.indexOf("[", currentIndex);
                 int closeBracket = line.indexOf("]", openBracket);
+                if(line.charAt(closeBracket + 1) != new Character('(')) {  
+                    break;
+                }
+                else {
+                    int openParen = closeBracket + 1;
+                    int closeParen = line.indexOf(")", openParen);
+                    result.add(line.substring(openParen + 1, closeParen));
+                    currentIndex = closeParen + 1; 
+                }  
+                break;
                 
-                int openParen = line.indexOf("(", closeBracket);
-                int closeParen = line.indexOf(")", openParen);
-                result.add(line.substring(openParen + 1, closeParen));
-                currentIndex = closeParen + 1;
-            } 
+            }
             next = myReader.hasNext();
             if (!next) {
                 break;
@@ -36,13 +42,14 @@ public class MarkdownParse {
 
 
     public static void main(String[] args) throws IOException {
-        String fileName = args[0];
+        String fileName = "/Users/emilyguo/Desktop/CSE15L/report 4/ednafiles/report4-test1.md";
         File file = new File(fileName);
         Scanner myReader = new Scanner(file);
-        ArrayList<String> result = getLinks(myReader);
-        
+        ArrayList<String> links = MarkdownParse.getLinks(myReader);
+        ArrayList<String> result = new ArrayList<>();
+
         for (int i =0; i < 2; i ++) {
-            System.out.println(result.get(i));
+            System.out.println(links.get(i));
         }
     }
 }
